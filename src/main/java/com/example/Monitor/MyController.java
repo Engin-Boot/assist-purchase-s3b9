@@ -26,7 +26,7 @@ public class MyController {
 
 
     @RequestMapping(method=RequestMethod.GET)
-    public List<Product> getTouchScreen(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor) throws Exception{
+    public List<Product> getProductUserSpec(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor) throws Exception{
         return service.getProductsAccParameters(touchscreen,size,category,transportMonitor);
 
     }
