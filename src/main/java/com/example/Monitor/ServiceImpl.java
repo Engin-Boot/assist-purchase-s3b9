@@ -10,9 +10,12 @@ import java.util.Optional;
 @Component
 @org.springframework.stereotype.Service
 public class ServiceImpl implements IService {
+    MydaoRepository dao;
     @Autowired
-    mydaoRepository dao;
-
+    public void setdao(MydaoRepository dao)
+    {
+        this.dao = dao;
+    }
 
     @Override
     public List<Product> getProducts() {

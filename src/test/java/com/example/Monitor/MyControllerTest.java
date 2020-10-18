@@ -1,165 +1,221 @@
 package com.example.Monitor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
+import javax.print.attribute.standard.Media;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.ArgumentMatchers.any;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import com.fasterxml.jackson.core.JsonParseException;
-import org.springframework.web.util.NestedServletException;
-
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
-class MyControllerTest {
+public class MyControllerTest {
 
-    @Autowired
-    private MyController controller;
-
-    @Autowired
     private MockMvc mockMvc;
+    @Mock
+    ServiceImpl service;
 
-    protected String mapToJson(Object obj) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(obj);
-    }
-    protected <T> T mapFromJson(String json, Class<T> clazz)
-            throws JsonParseException, JsonMappingException, IOException {
+    @Mock
+    MydaoRepository mydaoRepository;
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, clazz);
-    }
+    @Autowired
+    MyController myController;
 
     @BeforeEach
-    void setUp() throws Exception{
-        mockMvc= MockMvcBuilders.standaloneSetup(controller).build();
+    public void setup(){
+        myController.setService(service);
+        mockMvc= MockMvcBuilders.standaloneSetup(myController).build();
     }
-
-
     @Test
-    public void contextLoads() throws Exception{
-        assertThat(controller).isNotNull();
-    }
+    public void getAllProducts() throws Exception {
+        Product prod1=new Product();
+        prod1.setPid(1);
+        prod1.setPname("IntelliVue X3");
+        prod1.setTouchscreen(true);
+        prod1.setWeight("light");
+        prod1.setSize(15);
+        prod1.setCategory("bedside");
+        prod1.setTransportMonitor(false);
+        prod1.setWaterproof(false);
 
-    @Test
-    public void getAllProducts() throws Exception{
+        Product prod2=new Product();
+        prod2.setPid(2);
+        prod2.setPname("IntelliVue MX40");
+        prod2.setTouchscreen(false);
+        prod2.setWeight("light");
+        prod2.setSize(15);
+        prod2.setCategory("wearable");
+        prod2.setTransportMonitor(true);
+        prod2.setWaterproof(true);
+
+        List<Product> prodlist=new ArrayList<>();
+        prodlist.add(prod1);
+        prodlist.add(prod2);
+
+        Mockito.when(service.getProducts()).thenReturn(prodlist);
+
+
+
+
         mockMvc.perform(get("/products/all").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", Matchers.hasSize(2)));
     }
 
     @Test
-    public void createProduct() throws Exception {
-        String uri = "/products/add";
-        Product product = new Product();
-        product.setPid(100);
-        product.setPname("IntelliVue MX400");
-        product.setSize(9);
-        product.setCategory("Bedside");
-        product.setTouchscreen(true);
-        product.setWaterproof(false);
-        product.setTransportMonitor(true);
-        product.setWeight("light");
+    public void getProductsById() throws Exception {
+        Product prod1=new Product();
+        prod1.setPid(10);
+        prod1.setPname("IntelliVue X3");
+        prod1.setTouchscreen(true);
+        prod1.setWeight("light");
+        prod1.setSize(15);
+        prod1.setCategory("nighttime Radiant");
+        prod1.setTransportMonitor(false);
+        prod1.setWaterproof(false);
 
-        String inputJson = mapToJson(product);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+        Mockito.when(mydaoRepository.findById(10)).thenReturn(java.util.Optional.of(prod1));
+        Mockito.when(service.getProductsById(10)).thenReturn(java.util.Optional.of(prod1));
 
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
-        //String content = mvcResult.getResponse().getContentAsString();
-        //assertEquals(content, "Product is created successfully");
+
+
+        mockMvc.perform((get("/products/{pid}",10)).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pid", Matchers.is(10)))
+                .andExpect(jsonPath("$.pname",Matchers.is("IntelliVue X3")))
+                .andExpect(jsonPath("$.touchscreen",Matchers.is(true)))
+                .andExpect(jsonPath("$.weight",Matchers.is("light")))
+                .andExpect(jsonPath("$.size",Matchers.is(15)))
+                .andExpect(jsonPath("$.category",Matchers.is("nighttime Radiant")))
+                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)))
+                .andExpect(jsonPath("$.waterproof", Matchers.is(false)));
+
+    }
+
+    public static String asJsonString(final Object obj) {
+
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void productAdd() throws Exception {
+        Product prod1=new Product();
+        prod1.setPid(10);
+        prod1.setPname("IntelliVue X3");
+        prod1.setTouchscreen(true);
+        prod1.setWeight("light");
+        prod1.setSize(15);
+        prod1.setCategory("nighttime Radiant");
+        prod1.setTransportMonitor(false);
+        prod1.setWaterproof(false);
+
+        Mockito.when(mydaoRepository.save(any(Product.class))).thenReturn(prod1);
+        Mockito.when(service.addProduct(any(Product.class))).thenReturn(prod1);
+
+        mockMvc.perform((post("/products/add")).content(asJsonString(prod1))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pid", Matchers.is(10)))
+                .andExpect(jsonPath("$.pname",Matchers.is("IntelliVue X3")))
+                .andExpect(jsonPath("$.touchscreen",Matchers.is(true)))
+                .andExpect(jsonPath("$.weight",Matchers.is("light")))
+                .andExpect(jsonPath("$.size",Matchers.is(15)))
+                .andExpect(jsonPath("$.category",Matchers.is("nighttime Radiant")))
+                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)))
+                .andExpect(jsonPath("$.waterproof", Matchers.is(false)));
+
     }
 
     @Test
     public void updateProduct() throws Exception {
-        String uri = "/products/update/2";
-        Product product = new Product();
-        product.setPid(2);
-        product.setPname("IntelliVue MX40");
-        product.setSize(12);
-        product.setCategory("Wearable");
-        product.setTouchscreen(true);
-        product.setWaterproof(true);
-        product.setTransportMonitor(true);
-        product.setWeight("very light");
 
 
-        String inputJson = mapToJson(product);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+        Product prod1=new Product();
+        prod1.setPid(1);
+        prod1.setPname("IntelliVue X3");
+        prod1.setTouchscreen(true);
+        prod1.setWeight("light");
+        prod1.setSize(15);
+        prod1.setCategory("nighttime Radiant");
+        prod1.setTransportMonitor(false);
+        prod1.setWaterproof(false);
 
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
-//        String content = mvcResult.getResponse().getContentAsString();
-//        assertEquals(content, "Product is updated successsfully");
+        Product prod2=new Product();
+        prod2.setPid(1);
+        prod2.setPname("IntelliVue MX40");
+        prod2.setTouchscreen(false);
+        prod2.setWeight("light");
+        prod2.setSize(15);
+        prod2.setCategory("wearable");
+        prod2.setTransportMonitor(true);
+        prod2.setWaterproof(true);
+
+        Mockito.when(service.getProductsById(1)).thenReturn(java.util.Optional.of(prod2));
+        Mockito.when(service.updateProduct(any(Product.class))).thenReturn(prod1);
+
+        mockMvc.perform((put("/products/update/{pid}",1))
+                .content(asJsonString(prod1))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pid", Matchers.is(1)))
+                .andExpect(jsonPath("$.pname",Matchers.is("IntelliVue X3")))
+                .andExpect(jsonPath("$.touchscreen",Matchers.is(true)))
+                .andExpect(jsonPath("$.weight",Matchers.is("light")))
+                .andExpect(jsonPath("$.size",Matchers.is(15)))
+                .andExpect(jsonPath("$.category",Matchers.is("nighttime Radiant")))
+                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)))
+                .andExpect(jsonPath("$.waterproof", Matchers.is(false)));
     }
 
     @Test
-    public void updateProductNotFound() throws Exception {
-        String uri = "/products/update/200";
-        Product product = new Product();
-        product.setPid(2);
-        product.setPname("IntelliVue MX40");
-        product.setSize(12);
-        product.setCategory("Wearable");
-        product.setTouchscreen(true);
-        product.setWaterproof(true);
-        product.setTransportMonitor(true);
-        product.setWeight("very light");
+    public void DeleteProduct() throws Exception {
 
-        Exception exception=assertThrows(Exception.class,()->{
-            String inputJson = mapToJson(product);
-            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(uri)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+        Product prod1=new Product();
+        prod1.setPid(10);
+        prod1.setPname("IntelliVue X3");
+        prod1.setTouchscreen(true);
+        prod1.setWeight("light");
+        prod1.setSize(15);
+        prod1.setCategory("nighttime Radiant");
+        prod1.setTransportMonitor(false);
+        prod1.setWaterproof(false);
 
-            int status = mvcResult.getResponse().getStatus();
-            assertEquals(404, status);
-        });
+        //Mockito.when(mydaoRepository.save(any(Product.class))).thenReturn(prod1);
+        Mockito.when(service.getProductsById(10)).thenReturn(java.util.Optional.of(prod1));
+        Mockito.when(service.deleteProductById(10)).thenReturn(String.valueOf(prod1));
+        mockMvc.perform((delete("/products/delete/{pid}",10)).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
-//        String content = mvcResult.getResponse().getContentAsString();
-//        assertEquals(content, "Product is updated successsfully");
     }
 
-    @Test
-    public void deleteProduct() throws Exception {
-        String uri = "/products/delete/2";
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(uri)).andReturn();
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
-//        String content = mvcResult.getResponse().getContentAsString();
-//        assertEquals(content, "Product is deleted successsfully");
-    }
 
-    @Test
-    public void deleteProductNotFound() throws Exception {
-        String uri = "/products/delete/200";
-        Exception exception=assertThrows(Exception.class,()->{
-            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(uri)).andReturn();
-            int status = mvcResult.getResponse().getStatus();
-            assertEquals(404, status);
-        });
-    }
+
 }
+
