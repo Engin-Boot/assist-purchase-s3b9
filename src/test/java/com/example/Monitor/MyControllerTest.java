@@ -51,21 +51,17 @@ public class MyControllerTest {
         prod1.setPid(1);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Product prod2=new Product();
         prod2.setPid(2);
         prod2.setPname("IntelliVue MX40");
         prod2.setTouchscreen(false);
-        prod2.setWeight("light");
         prod2.setSize(15);
         prod2.setCategory("wearable");
         prod2.setTransportMonitor(true);
-        prod2.setWaterproof(true);
 
         List<Product> prodlist=new ArrayList<>();
         prodlist.add(prod1);
@@ -87,11 +83,9 @@ public class MyControllerTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("nighttime Radiant");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Mockito.when(mydaoRepository.findById(10)).thenReturn(java.util.Optional.of(prod1));
         Mockito.when(service.getProductsById(10)).thenReturn(java.util.Optional.of(prod1));
@@ -103,11 +97,9 @@ public class MyControllerTest {
                 .andExpect(jsonPath("$.pid", Matchers.is(10)))
                 .andExpect(jsonPath("$.pname",Matchers.is("IntelliVue X3")))
                 .andExpect(jsonPath("$.touchscreen",Matchers.is(true)))
-                .andExpect(jsonPath("$.weight",Matchers.is("light")))
                 .andExpect(jsonPath("$.size",Matchers.is(15)))
                 .andExpect(jsonPath("$.category",Matchers.is("nighttime Radiant")))
-                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)))
-                .andExpect(jsonPath("$.waterproof", Matchers.is(false)));
+                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)));
 
     }
 
@@ -128,11 +120,9 @@ public class MyControllerTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("nighttime Radiant");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Mockito.when(mydaoRepository.save(any(Product.class))).thenReturn(prod1);
         Mockito.when(service.addProduct(any(Product.class))).thenReturn(prod1);
@@ -144,11 +134,9 @@ public class MyControllerTest {
                 .andExpect(jsonPath("$.pid", Matchers.is(10)))
                 .andExpect(jsonPath("$.pname",Matchers.is("IntelliVue X3")))
                 .andExpect(jsonPath("$.touchscreen",Matchers.is(true)))
-                .andExpect(jsonPath("$.weight",Matchers.is("light")))
                 .andExpect(jsonPath("$.size",Matchers.is(15)))
                 .andExpect(jsonPath("$.category",Matchers.is("nighttime Radiant")))
-                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)))
-                .andExpect(jsonPath("$.waterproof", Matchers.is(false)));
+                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)));
 
     }
 
@@ -160,21 +148,17 @@ public class MyControllerTest {
         prod1.setPid(1);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("nighttime Radiant");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Product prod2=new Product();
         prod2.setPid(1);
         prod2.setPname("IntelliVue MX40");
         prod2.setTouchscreen(false);
-        prod2.setWeight("light");
         prod2.setSize(15);
         prod2.setCategory("wearable");
         prod2.setTransportMonitor(true);
-        prod2.setWaterproof(true);
 
         Mockito.when(service.getProductsById(1)).thenReturn(java.util.Optional.of(prod2));
         Mockito.when(service.updateProduct(any(Product.class))).thenReturn(prod1);
@@ -187,11 +171,9 @@ public class MyControllerTest {
                 .andExpect(jsonPath("$.pid", Matchers.is(1)))
                 .andExpect(jsonPath("$.pname",Matchers.is("IntelliVue X3")))
                 .andExpect(jsonPath("$.touchscreen",Matchers.is(true)))
-                .andExpect(jsonPath("$.weight",Matchers.is("light")))
                 .andExpect(jsonPath("$.size",Matchers.is(15)))
                 .andExpect(jsonPath("$.category",Matchers.is("nighttime Radiant")))
-                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)))
-                .andExpect(jsonPath("$.waterproof", Matchers.is(false)));
+                .andExpect(jsonPath("$.transportMonitor",Matchers.is(false)));
     }
 
     @Test
@@ -201,11 +183,9 @@ public class MyControllerTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("nighttime Radiant");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         //Mockito.when(mydaoRepository.save(any(Product.class))).thenReturn(prod1);
         Mockito.when(service.getProductsById(10)).thenReturn(java.util.Optional.of(prod1));

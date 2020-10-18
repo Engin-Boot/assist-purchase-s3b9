@@ -79,9 +79,8 @@ class MyControllerIT {
         product.setSize(9);
         product.setCategory("Bedside");
         product.setTouchscreen(true);
-        product.setWaterproof(false);
         product.setTransportMonitor(true);
-        product.setWeight("light");
+
 
         String inputJson = mapToJson(product);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
@@ -102,9 +101,8 @@ class MyControllerIT {
         product.setSize(12);
         product.setCategory("Wearable");
         product.setTouchscreen(true);
-        product.setWaterproof(true);
         product.setTransportMonitor(true);
-        product.setWeight("very light");
+
 
 
         String inputJson = mapToJson(product);
@@ -126,9 +124,7 @@ class MyControllerIT {
         product.setSize(12);
         product.setCategory("Wearable");
         product.setTouchscreen(true);
-        product.setWaterproof(true);
         product.setTransportMonitor(true);
-        product.setWeight("very light");
 
         Exception exception=assertThrows(Exception.class,()->{
             String inputJson = mapToJson(product);

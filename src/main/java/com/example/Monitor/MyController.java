@@ -26,8 +26,8 @@ public class MyController {
 
 
     @RequestMapping(method=RequestMethod.GET)
-    public List<Product> getTouchScreen(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="weight") String weight, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor, @RequestParam(value="waterproof") boolean waterproof) throws Exception{
-        return service.getProductsAccParameters(touchscreen,weight,size,category,transportMonitor,waterproof);
+    public List<Product> getTouchScreen(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor) throws Exception{
+        return service.getProductsAccParameters(touchscreen,size,category,transportMonitor);
 
     }
 
@@ -51,8 +51,8 @@ public class MyController {
         Optional<Product> b =  service.getProductsById(pid);
         if(!b.isPresent())
             throw new Exception("Product is not present in the library");
-//        if(product.getCategory()==null || product.getCategory().isEmpty())
-//            product.setCategory(b.get().getCategory());
+        // if(product.getCategory()==null || product.getCategory().isEmpty())
+        //    product.setCategory(b.get().getCategory());
 
 
         product.setPid(pid);

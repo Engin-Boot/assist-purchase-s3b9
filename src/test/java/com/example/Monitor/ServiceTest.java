@@ -48,21 +48,17 @@ public class ServiceTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Product prod2=new Product();
         prod2.setPid(20);
         prod2.setPname("IntelliVue MX40");
         prod2.setTouchscreen(false);
-        prod2.setWeight("light");
         prod2.setSize(15);
         prod2.setCategory("wearable");
         prod2.setTransportMonitor(true);
-        prod2.setWaterproof(true);
 
         List<Product> prodlist=new ArrayList<>();
         prodlist.add(prod1);
@@ -80,21 +76,17 @@ public class ServiceTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Product prod2=new Product();
         prod2.setPid(20);
         prod2.setPname("IntelliVue MX40");
         prod2.setTouchscreen(false);
-        prod2.setWeight("light");
         prod2.setSize(15);
         prod2.setCategory("wearable");
         prod2.setTransportMonitor(true);
-        prod2.setWaterproof(true);
 
         List<Product> prodlist=new ArrayList<>();
         prodlist.add(prod1);
@@ -111,11 +103,9 @@ public class ServiceTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
 
 
@@ -125,7 +115,7 @@ public class ServiceTest {
 
         Mockito.when(dao.findAll()).thenReturn(prodlist);//the list returned contains only the prod1 object
         //the only method needed to be mocked is the findAll() method since it is used to get the products list inside the function
-        assertEquals(service.getProductsAccParameters(true,"light",15,"bedside",false,false),prodlist);
+        assertEquals(service.getProductsAccParameters(true,15,"bedside",false),prodlist);
     }
 
     @Test
@@ -134,11 +124,9 @@ public class ServiceTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Mockito.when(dao.findById(10)).thenReturn(java.util.Optional.of(prod1));
         assertEquals(service.getProductsById(10),java.util.Optional.of(prod1));
@@ -151,11 +139,10 @@ public class ServiceTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
+
 
         Mockito.when(dao.save(any(Product.class))).thenReturn(prod1);
         assertEquals(service.addProduct(prod1),prod1);
@@ -167,11 +154,9 @@ public class ServiceTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         Mockito.when(dao.save(any(Product.class))).thenReturn(prod1);
         assertEquals(service.updateProduct(prod1),prod1);
@@ -183,11 +168,9 @@ public class ServiceTest {
         prod1.setPid(10);
         prod1.setPname("IntelliVue X3");
         prod1.setTouchscreen(true);
-        prod1.setWeight("light");
         prod1.setSize(15);
         prod1.setCategory("bedside");
         prod1.setTransportMonitor(false);
-        prod1.setWaterproof(false);
 
         assertEquals(service.deleteProductById(10),"Product is deleted successsfully");
     }

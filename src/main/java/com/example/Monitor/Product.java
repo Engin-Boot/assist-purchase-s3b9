@@ -23,8 +23,7 @@ public class Product {
     @Column
     private boolean touchscreen;
 
-    @Column
-    private String weight;
+
 
     @Column
     private int size;
@@ -35,8 +34,6 @@ public class Product {
     @Column
     private boolean transportMonitor;
 
-    @Column
-    private boolean waterproof;
 
     public Product() {
     }
@@ -65,14 +62,6 @@ public class Product {
         this.touchscreen = touchscreen;
     }
 
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
     public int getSize() {
         return size;
     }
@@ -97,13 +86,7 @@ public class Product {
         this.transportMonitor = transportMonitor;
     }
 
-    public boolean isWaterproof() {
-        return waterproof;
-    }
 
-    public void setWaterproof(boolean waterproof) {
-        this.waterproof = waterproof;
-    }
 
 
 
@@ -113,7 +96,7 @@ public class Product {
 
     @Override
     public String toString(){
-        return "Product [pid=" + pid + ", pname=" + pname + ", touchscreen=" + touchscreen + ", weight=" + weight +" size=" + size + ", category=" + category + "transportMonitor" + transportMonitor + "]";
+        return "Product [pid=" + pid + ", pname=" + pname + ", touchscreen=" + touchscreen +" size=" + size + ", category=" + category + "transportMonitor" + transportMonitor + "]";
     }
 }
 

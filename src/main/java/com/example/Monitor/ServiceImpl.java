@@ -28,11 +28,11 @@ public class ServiceImpl implements IService {
     }
 
     @Override
-    public List<Product> getProductsAccParameters(boolean touchscreen, String weight, int size, String category, boolean transportMonitor, boolean waterproof) {
+    public List<Product> getProductsAccParameters(boolean touchscreen, int size, String category, boolean transportMonitor) {
         List<Product> lprod=getProducts();
         List<Product> userRequestedProd=new ArrayList<>();
         for(int i=0;i<lprod.size();i++){
-            if(lprod.get(i).isTouchscreen()==touchscreen && lprod.get(i).getSize()==size && lprod.get(i).isTransportMonitor()==transportMonitor && lprod.get(i).isWaterproof()==waterproof && lprod.get(i).getCategory().equals(category) && lprod.get(i).getWeight().equals(weight)){
+            if(lprod.get(i).isTouchscreen()==touchscreen && lprod.get(i).getSize()==size && lprod.get(i).isTransportMonitor()==transportMonitor && lprod.get(i).getCategory().equals(category)){
                 userRequestedProd.add(lprod.get(i));
             }
         }
