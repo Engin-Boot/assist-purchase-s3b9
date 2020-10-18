@@ -5,7 +5,11 @@ import java.util.Optional;
 
 public interface IService {
     public List<Product> getProducts();
-    public List<Product> getProductsAccParameters(boolean touchscreen,int size, String category,boolean transportMonitor);
+    public List<Product> getProductsTouchScreen(boolean touchscreen);
+    public List<Product> getProductsSize(int size);
+    public List<Product> getProductsCategory(String category);
+    public List<Product> getProductsTransportMonitor(boolean transportMonitor);
+    public List<Product> getProductSpecs();
     public Optional<Product> getProductsById(int pid);
     public Product addProduct(Product b);
     public Product updateProduct(Product b);
