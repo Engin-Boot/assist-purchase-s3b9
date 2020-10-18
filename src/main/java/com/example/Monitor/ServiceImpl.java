@@ -8,10 +8,10 @@ import java.util.*;
 @Component
 @org.springframework.stereotype.Service
 public class ServiceImpl implements IService {
-    List<Product> touchscreenList=new ArrayList<>();
-    List<Product> sizeList=new ArrayList<>();
-    List<Product> categoryList=new ArrayList<>();
-    List<Product> transportMonitorList=new ArrayList<>();
+
+
+
+
     MydaoRepository dao;
     @Autowired
     public void setdao(MydaoRepository dao)
@@ -32,6 +32,7 @@ public class ServiceImpl implements IService {
     @Override
     public List<Product> getProductsTouchScreen(boolean touchscreen){
         List<Product> lprod=getProducts();
+        List<Product> touchscreenList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
             if(lprod.get(i).isTouchscreen()==touchscreen)
@@ -43,6 +44,7 @@ public class ServiceImpl implements IService {
     @Override
     public List<Product> getProductsSize(int size){
         List<Product> lprod=getProducts();
+        List<Product> sizeList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
             if(lprod.get(i).getSize()==size)
@@ -54,6 +56,7 @@ public class ServiceImpl implements IService {
     @Override
     public List<Product> getProductsCategory(String category){
         List<Product> lprod=getProducts();
+        List<Product> categoryList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
             if(lprod.get(i).getCategory().equals(category))
@@ -65,12 +68,41 @@ public class ServiceImpl implements IService {
     @Override
     public List<Product> getProductsTransportMonitor(boolean transportMonitor){
         List<Product> lprod=getProducts();
+        List<Product> transportMonitorList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
             if(lprod.get(i).isTransportMonitor()==transportMonitor)
                 transportMonitorList.add(lprod.get(i));
         }
         return transportMonitorList;
+    }
+
+    @Override
+    public List<Product> getProductUserChoices(List<Product> touchscreenList,List<Product> sizeList, List<Product> categoryList, List<Product> transportMonitorList){
+        Set<Product> hSet1 = new HashSet<Product>();
+        for (Product x : touchscreenList)
+            hSet1.add(x);
+
+        Set<Product> hSet2 = new HashSet<Product>();
+        for (Product x : sizeList)
+            hSet2.add(x);
+
+        Set<Product> hSet3 = new HashSet<Product>();
+        for (Product x : categoryList)
+            hSet3.add(x);
+
+        Set<Product> hSet4 = new HashSet<Product>();
+        for (Product x : transportMonitorList)
+            hSet4.add(x);
+
+        hSet1.retainAll(hSet2);
+        hSet1.retainAll(hSet3);
+        hSet1.retainAll(hSet4);
+
+        List<Product> prodList=new ArrayList<>();
+        prodList.addAll(hSet1);
+        return prodList;
+
     }
 
 
