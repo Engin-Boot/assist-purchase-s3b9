@@ -51,12 +51,10 @@ public class MyController {
         Optional<Product> b =  service.getProductsById(pid);
         if(!b.isPresent())
             throw new Exception("Product is not present in the library");
-        if(product.getCategory()==null || product.getCategory().isEmpty())
-            product.setCategory(b.get().getCategory());
+//        if(product.getCategory()==null || product.getCategory().isEmpty())
+//            product.setCategory(b.get().getCategory());
 
-        if(product.getSize()==0){
-            product.setSize(b.get().getSize());
-        }
+
         product.setPid(pid);
         return service.updateProduct(product);
     }
