@@ -24,17 +24,12 @@ public class MyController {
 
     }
 
+
     @RequestMapping(method=RequestMethod.GET)
-    public List<Product> getProductUserChoices(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor) throws Exception{
-        List<Product> touchscreenList=service.getProductsTouchScreen(touchscreen);
-        List<Product> sizeList=service.getProductsSize(size);
-        List<Product> categoryList=service.getProductsCategory(category);
-        List<Product> transportMonitorList=service.getProductsTransportMonitor(transportMonitor);
+    public List<Product> getTouchScreen(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor) throws Exception{
+        return service.getProductsAccParameters(touchscreen,size,category,transportMonitor);
 
-        return service.getProductUserChoices(touchscreenList,sizeList,categoryList,transportMonitorList);
     }
-
-
 
 
     @RequestMapping(value= "/{pid}", method= RequestMethod.GET)

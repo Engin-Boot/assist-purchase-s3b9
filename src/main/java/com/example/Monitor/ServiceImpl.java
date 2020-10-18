@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @org.springframework.stereotype.Service
 public class ServiceImpl implements IService {
-
-
-
+    List<Product> touchscreenList=new ArrayList<>();
+    List<Product> sizeList=new ArrayList<>();
+    List<Product> categoryList=new ArrayList<>();
+    List<Product> transportMonitorList=new ArrayList<>();
 
     MydaoRepository dao;
     @Autowired
@@ -30,97 +32,69 @@ public class ServiceImpl implements IService {
     }
 
     @Override
-    public List<Product> getProductsTouchScreen(boolean touchscreen){
+    public void getProductsTouchScreen(boolean touchscreen){
         List<Product> lprod=getProducts();
-        List<Product> touchscreenList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
-            if(lprod.get(i).isTouchscreen()==touchscreen)
+            if(lprod.get(i).isTouchscreen()==touchscreen) {
                 touchscreenList.add(lprod.get(i));
+            }
         }
-        return touchscreenList;
+        //return touchscreenList;
     }
 
     @Override
-    public List<Product> getProductsSize(int size){
+    public void getProductsSize(int size){
         List<Product> lprod=getProducts();
-        List<Product> sizeList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
             if(lprod.get(i).getSize()==size)
                 sizeList.add(lprod.get(i));
         }
-        return sizeList;
+//        return sizeList;
     }
 
     @Override
-    public List<Product> getProductsCategory(String category){
+    public void getProductsCategory(String category){
         List<Product> lprod=getProducts();
-        List<Product> categoryList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
             if(lprod.get(i).getCategory().equals(category))
                 categoryList.add(lprod.get(i));
         }
-        return categoryList;
+//        return categoryList;
     }
 
     @Override
-    public List<Product> getProductsTransportMonitor(boolean transportMonitor){
+    public void getProductsTransportMonitor(boolean transportMonitor){
         List<Product> lprod=getProducts();
-        List<Product> transportMonitorList=new ArrayList<>();
         for(int i=0;i<lprod.size();i++)
         {
             if(lprod.get(i).isTransportMonitor()==transportMonitor)
                 transportMonitorList.add(lprod.get(i));
         }
-        return transportMonitorList;
+        //return transportMonitorList;
+    }
+
+    public Set<Product> getProductSpecs(){
+        Set<Product> intersectionSet1=categoryList.stream().distinct().filter(transportMonitorList::contains)
+                .collect(Collectors.toSet());
+        Set<Product> intersectionSet2=touchscreenList.stream().distinct().filter(sizeList::contains)
+                .collect(Collectors.toSet());
+        intersectionSet1.retainAll(intersectionSet2);
+        //List<Product> intersectedProductsList=new ArrayList<Product>(intersectionSet1);
+        return intersectionSet1;
     }
 
     @Override
-    public List<Product> getProductUserChoices(List<Product> touchscreenList,List<Product> sizeList, List<Product> categoryList, List<Product> transportMonitorList){
-        Set<Product> hSet1 = new HashSet<Product>();
-        for (Product x : touchscreenList)
-            hSet1.add(x);
-
-        Set<Product> hSet2 = new HashSet<Product>();
-        for (Product x : sizeList)
-            hSet2.add(x);
-
-        Set<Product> hSet3 = new HashSet<Product>();
-        for (Product x : categoryList)
-            hSet3.add(x);
-
-        Set<Product> hSet4 = new HashSet<Product>();
-        for (Product x : transportMonitorList)
-            hSet4.add(x);
-
-        hSet1.retainAll(hSet2);
-        hSet1.retainAll(hSet3);
-        hSet1.retainAll(hSet4);
-
-        List<Product> prodList=new ArrayList<>();
-        prodList.addAll(hSet1);
-        return prodList;
-
+    public List<Product> getProductsAccParameters(boolean touchscreen, int size, String category, boolean transportMonitor) {
+        getProductsCategory(category);
+        getProductsTransportMonitor(transportMonitor);
+        getProductsSize(size);
+        getProductsTouchScreen(touchscreen);
+        List<Product> userRequestedProd=new ArrayList<>(getProductSpecs());
+        return userRequestedProd;
     }
-
-
-
-
-
-
-//    @Override
-//    public List<Product> getProductsAccParameters(boolean touchscreen, int size, String category, boolean transportMonitor) {
-//        List<Product> lprod=getProducts();
-//        List<Product> userRequestedProd=new ArrayList<>();
-//        for(int i=0;i<lprod.size();i++){
-//            if(lprod.get(i).isTouchscreen()==touchscreen && lprod.get(i).getSize()==size && lprod.get(i).isTransportMonitor()==transportMonitor && lprod.get(i).getCategory().equals(category)){
-//                userRequestedProd.add(lprod.get(i));
-//            }
-//        }
-//        return userRequestedProd;
-//    }
 
     @Override
     public Optional<Product> getProductsById(int pid) {

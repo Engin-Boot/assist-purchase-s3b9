@@ -97,26 +97,26 @@ public class ServiceTest {
 
     }
 
-//    @Test
-//    public void ReturnUserSpecProducts(){
-//        Product prod1=new Product();
-//        prod1.setPid(10);
-//        prod1.setPname("IntelliVue X3");
-//        prod1.setTouchscreen(true);
-//        prod1.setSize(15);
-//        prod1.setCategory("bedside");
-//        prod1.setTransportMonitor(false);
-//
-//
-//
-//        List<Product> prodlist=new ArrayList<>();
-//        prodlist.add(prod1);
-//
-//
-//        Mockito.when(dao.findAll()).thenReturn(prodlist);//the list returned contains only the prod1 object
-//        //the only method needed to be mocked is the findAll() method since it is used to get the products list inside the function
-//        assertEquals(service.getProductUserChoices(any(List.class),any(List.class),any(List.class),any(List.class)),prodlist);
-//    }
+    @Test
+    public void ReturnUserSpecProducts(){
+        Product prod1=new Product();
+        prod1.setPid(10);
+        prod1.setPname("IntelliVue X3");
+        prod1.setTouchscreen(true);
+        prod1.setSize(15);
+        prod1.setCategory("bedside");
+        prod1.setTransportMonitor(false);
+
+
+
+        List<Product> prodlist=new ArrayList<>();
+        prodlist.add(prod1);
+
+
+        Mockito.when(dao.findAll()).thenReturn(prodlist);//the list returned contains only the prod1 object
+        //the only method needed to be mocked is the findAll() method since it is used to get the products list inside the function
+        assertEquals(service.getProductsAccParameters(true,15,"bedside",false),prodlist);
+    }
 
     @Test
     public void getProductsById(){

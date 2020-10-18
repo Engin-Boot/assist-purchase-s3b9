@@ -5,6 +5,8 @@ import javax.persistence.*;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 
 @Entity
@@ -86,18 +88,23 @@ public class Product {
         this.transportMonitor = transportMonitor;
     }
 
-
-
-
-
-
-
-
-
     @Override
     public String toString(){
         return "Product [pid=" + pid + ", pname=" + pname + ", touchscreen=" + touchscreen +" size=" + size + ", category=" + category + "transportMonitor" + transportMonitor + "]";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return pid == product.pid;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(pid);
+//    }
 }
 
 
