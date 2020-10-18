@@ -1,0 +1,22 @@
+[
+  {
+    "pid": "1",
+    "pname": "IntelliVue X3",
+    "touchscreen": true,
+    "weight": "light",
+    "size": "10",
+    "category": "bedside",
+    "transportMonitor": true,
+    "waterproof": false
+  },
+  {
+    "pid": "2",
+    "pname": "IntelliVue MX40",
+    "touchscreen": true,
+    "weight": "light",
+    "size": "7",
+    "category": "wearable",
+    "transportMonitor": true,
+    "waterproof": true
+  }
+]
