@@ -1,4 +1,6 @@
-package com.example.Monitor;
+package com.example.Monitor.Controller;
+import com.example.Monitor.Model.Product;
+import com.example.Monitor.Service.ServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,9 @@ public class MyController {
 
 
     @RequestMapping(method=RequestMethod.GET)
-    public List<Product> getTouchScreen(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor) throws Exception{
+    public List<Product> getProductUserSpec(@RequestParam(value="touchscreen") boolean touchscreen, @RequestParam(value="size") int size, @RequestParam(value="category") String category, @RequestParam(value="transportMonitor") boolean transportMonitor) throws Exception{
         return service.getProductsAccParameters(touchscreen,size,category,transportMonitor);
+
 
     }
 

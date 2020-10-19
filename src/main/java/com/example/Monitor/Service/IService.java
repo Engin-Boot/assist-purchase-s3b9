@@ -1,4 +1,6 @@
-package com.example.Monitor;
+package com.example.Monitor.Service;
+
+import com.example.Monitor.Model.Product;
 
 import java.util.List;
 import java.util.Optional;

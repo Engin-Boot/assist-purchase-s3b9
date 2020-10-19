@@ -1,11 +1,9 @@
-package com.example.Monitor;
+package com.example.Monitor.Model;
 
 import javax.persistence.*;
 
 
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 @Component
 
