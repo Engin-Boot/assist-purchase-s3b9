@@ -30,7 +30,6 @@ public class ServiceImpl implements IService {
 
     public Iterable<Product> save(List<Product> products) {
         return dao.saveAll(products);
-        //return dao.save(products);
     }
 
     @Override
@@ -42,7 +41,6 @@ public class ServiceImpl implements IService {
                 touchscreenList.add(lprod.get(i));
             }
         }
-        //return touchscreenList;
     }
 
     @Override
@@ -53,7 +51,6 @@ public class ServiceImpl implements IService {
             if(lprod.get(i).getSize()==size)
                 sizeList.add(lprod.get(i));
         }
-//        return sizeList;
     }
 
     @Override
@@ -64,7 +61,6 @@ public class ServiceImpl implements IService {
             if(lprod.get(i).getCategory().equals(category))
                 categoryList.add(lprod.get(i));
         }
-//        return categoryList;
     }
 
     @Override
@@ -75,7 +71,6 @@ public class ServiceImpl implements IService {
             if(lprod.get(i).isTransportMonitor()==transportMonitor)
                 transportMonitorList.add(lprod.get(i));
         }
-        //return transportMonitorList;
     }
 
     public Set<Product> getProductSpecs(){
@@ -84,7 +79,6 @@ public class ServiceImpl implements IService {
         Set<Product> intersectionSet2=touchscreenList.stream().distinct().filter(sizeList::contains)
                 .collect(Collectors.toSet());
         intersectionSet1.retainAll(intersectionSet2);
-        //List<Product> intersectedProductsList=new ArrayList<Product>(intersectionSet1);
         return intersectionSet1;
     }
 

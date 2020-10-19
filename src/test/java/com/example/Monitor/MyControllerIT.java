@@ -65,7 +65,7 @@ class MyControllerIT {
     public void getAllProducts() throws Exception{
         mockMvc.perform(get("/products/all").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", Matchers.hasSize(2)));
+                .andExpect(jsonPath("$.*", Matchers.hasSize(12)));
     }
 
     @Test
@@ -86,8 +86,6 @@ class MyControllerIT {
 
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
-        //String content = mvcResult.getResponse().getContentAsString();
-        //assertEquals(content, "Product is created successfully");
     }
 
     @Test
@@ -109,8 +107,6 @@ class MyControllerIT {
 
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
-//        String content = mvcResult.getResponse().getContentAsString();
-//        assertEquals(content, "Product is updated successsfully");
     }
 
     @Test
@@ -133,8 +129,6 @@ class MyControllerIT {
             assertEquals(404, status);
         });
 
-//        String content = mvcResult.getResponse().getContentAsString();
-//        assertEquals(content, "Product is updated successsfully");
     }
 
     @Test
@@ -143,8 +137,6 @@ class MyControllerIT {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(uri)).andReturn();
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
-//        String content = mvcResult.getResponse().getContentAsString();
-//        assertEquals(content, "Product is deleted successsfully");
     }
 
     @Test
