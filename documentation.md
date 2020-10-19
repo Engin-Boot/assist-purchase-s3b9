@@ -29,7 +29,7 @@ GET -----------------------|  "/products/all"   |  Displays all the products pre
 GET -----------------------|  "/products/{pid}"  |  Displays the details of the product whose product id(pid) is mentioned as pathvariable
 
 GET -----------------------|  "/products?touchscreen={touchscreen}&size={size}&category={category}&transportMonitor={transportMonitor}"  | This 
-API returns the porducts according to user specifications
+                                                                                                                                         |API returns the porducts                                                                                                                                            |according to user                                                                                                                                                  |specifications
 
 
 
