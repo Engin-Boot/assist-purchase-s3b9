@@ -23,6 +23,7 @@ Once the main spring application (com.example.Monitor) has been run,Tomcat apach
 
 ## APIs Created
 Http Method:
+
 GET -----------------------|  "/products/all"  |  Displays all the products present in the repository
 
 
