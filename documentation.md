@@ -28,13 +28,13 @@ GET -----------------------|---"/products/all"----|---------Displays all the pro
 
 GET -----------------------|---"/products/{pid}"---|-------Displays the details of the product whose product id(pid) is mentioned as pathvariable---|
 
-GET -----------------------|  "/products?touchscreen={touchscreen}&size={size}&category={category}&transportMonitor={transportMonitor}"  |This API returns the products according to user specifications
+GET -----------------------|----"/products?touchscreen={touchscreen}&size={size}&category={category}&transportMonitor={transportMonitor}"---|----This API returns the products according to user specifications---|
 
-POST-----------------------|  "/products/add"     | This API adds a product into the repository according to Philips personnel use
+POST-----------------------|------"/products/add"------|-----This API adds a product into the repository according to Philips personnel use----|
 
-PUT------------------------|  "/products/update/{pid}  | This API is used to update any details of a particular product in the repository 
+PUT------------------------|-----"/products/update/{pid}-----|-----This API is used to update any details of a particular product in the repository----|
 
-DELETE----------------------|  "/products/delete/{pid}  |This API is used to delete the product whose pid is mentioned in the API from the repository
+DELETE----------------------|------"/products/delete/{pid}-----|-------This API is used to delete the product whose pid is mentioned in the API from the repository---|
 
 
 
