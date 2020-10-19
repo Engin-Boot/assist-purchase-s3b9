@@ -22,6 +22,8 @@ We have used in memory Json file for Database, hence no database is required to 
 Once the main spring application (com.example.Monitor) has been run,Tomcat apache server would set up.
 
 ## APIs Created
+Http Method:
+GET -----------------------|  "/products/all"  |  Displays all the products present in the repository
 
 
 
