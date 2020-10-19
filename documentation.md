@@ -11,8 +11,8 @@ The project makes use of Gradle as the build tool and hence, Gradle must also be
 We have used in memory Json file for Database, hence no database is required to be installed in the system.
 There is products.json file in resource folder which acts as database.
 
-##Steps to run project from command prompt
-#Building and Executing jar file :
+## Steps to run project from command prompt
+# Building and Executing jar file :
 1. start command promt and navigate to the root folder of project
 2. write the following command on command prompt
 
