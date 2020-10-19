@@ -23,15 +23,23 @@ public class ServiceImpl implements IService {
         this.dao = dao;
     }
 
+    /*
+    Returns list of all the products in thr repository
+     */
     @Override
     public List<Product> getProducts() {
         return dao.findAll();
     }
 
+
     public Iterable<Product> save(List<Product> products) {
         return dao.saveAll(products);
     }
 
+
+    /*
+    Returns list of products that have touchscreen, and focuses on no other feature of the product
+     */
     @Override
     public void getProductsTouchScreen(boolean touchscreen){
         List<Product> lprod=getProducts();
@@ -43,6 +51,10 @@ public class ServiceImpl implements IService {
         }
     }
 
+
+    /*
+    Returns list of products that have size according to user argument
+     */
     @Override
     public void getProductsSize(int size){
         List<Product> lprod=getProducts();
@@ -53,6 +65,10 @@ public class ServiceImpl implements IService {
         }
     }
 
+
+    /*
+    Returns list of products that fall into category according to user argument
+     */
     @Override
     public void getProductsCategory(String category){
         List<Product> lprod=getProducts();
@@ -63,6 +79,10 @@ public class ServiceImpl implements IService {
         }
     }
 
+
+    /*
+    Returns list of products that have transportMonitor as true i.e. the are portable
+     */
     @Override
     public void getProductsTransportMonitor(boolean transportMonitor){
         List<Product> lprod=getProducts();
@@ -73,6 +93,9 @@ public class ServiceImpl implements IService {
         }
     }
 
+    /*
+   Creates two sets for two lists each and finally performs intersection operation on them
+     */
     public Set<Product> getProductSpecs(){
         Set<Product> intersectionSet1=categoryList.stream().distinct().filter(transportMonitorList::contains)
                 .collect(Collectors.toSet());
@@ -82,6 +105,10 @@ public class ServiceImpl implements IService {
         return intersectionSet1;
     }
 
+
+    /*
+    Converts the set created by interscetion to be converted to arraylist
+     */
     @Override
     public List<Product> getProductsAccParameters(boolean touchscreen, int size, String category, boolean transportMonitor) {
         getProductsCategory(category);
