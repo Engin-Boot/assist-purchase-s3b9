@@ -9,7 +9,6 @@ It serves both the customer as well as Philips personnel.
 2. [Compiling](#Compiling)
 3. [Executing](#Executing)
 4. [APIs Created](#ApiCreated)
-5. [Goal Set and Achieved](#Goalset)
 
 
 ## Prerequisites
