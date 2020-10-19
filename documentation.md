@@ -18,5 +18,11 @@ Then, the target system must have Java (>=8) installed and available in the syst
 The project makes use of Gradle as the build tool and hence, Gradle must also be in the system path.
 We have used in memory Json file for Database, hence no database is required to be installed in the system.
 
+## Execution
+Once the main spring application (com.example.Monitor) has been run,Tomcat apache server would set up.
+
+## APIs Created
+
+
 
 
